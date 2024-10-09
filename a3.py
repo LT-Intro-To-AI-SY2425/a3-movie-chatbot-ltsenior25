@@ -142,8 +142,9 @@ def director_by_title(matches: List[str]) -> List[str]:
     title = matches[0]
     result = []
     for movie in movie_db:
-        if get_title == movie(director_by_title): 
-            result.append(get_director)
+        if get_title(movie) == title:
+            result.append(get_director(movie))
+    return result
 
 
 
@@ -157,7 +158,12 @@ def title_by_director(matches: List[str]) -> List[str]:
     Returns:
         a list of movies titles directed by the passed in director
     """
-    pass
+    director = matches[0]
+    result = [] 
+    for movie in movie_db:
+        if director == get_director(movie):
+            result.append(get_title(movie))
+    return result
 
 
 def actors_by_title(matches: List[str]) -> List[str]:
@@ -169,8 +175,12 @@ def actors_by_title(matches: List[str]) -> List[str]:
     Returns:
         a list of actors who acted in the passed in title
     """
-    pass
-
+    movie_title= str(matches[0])
+    actors = []
+    for movie in movie_db:
+        if get_title(movie) == movie_title:
+            actors.extend(get_actors(movie))
+    return actors
 
 def year_by_title(matches: List[str]) -> List[int]:
     """Finds year of passed in movie title
@@ -181,8 +191,13 @@ def year_by_title(matches: List[str]) -> List[int]:
     Returns:
         a list of one item (an int), the year that the movie was made
     """
-    pass
-
+    movie_title = str(matches[0])
+    result = []
+    for movie in movie_db:
+        if get_title(movie) == movie_title:
+            result.append(get_year(movie))
+            break  # Stop after finding the first match
+    return result
 
 def title_by_actor(matches: List[str]) -> List[str]:
     """Finds titles of all movies that the given actor was in
@@ -193,7 +208,12 @@ def title_by_actor(matches: List[str]) -> List[str]:
     Returns:
         a list of movie titles that the actor acted in
     """
-    pass
+    actor = matches[0]
+    result = []
+    for movie in movie_db:
+        if actor in get_actors(movie):
+            result.append(get_title(movie))
+    return result
 
 
 # dummy argument is ignored and doesn't matter
